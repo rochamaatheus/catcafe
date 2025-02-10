@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Catspresso - Café & Adoção Felina</title>
+    <meta
+      name="description"
+      content="Catspresso - Café especial com adoção de gatos. Encontre seu companheiro felino enquanto desfruta de um café premium."
+    />
+    <meta
+      name="keywords"
+      content="café, adoção de gatos, gatitos, cafeteria, animais"
+    />
+    <meta property="og:title" content="Catspresso - Café & Adoção Felina" />
+    <meta property="og:type" content="website" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&family=Playfair+Display:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome: Use CDN (já minificado) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      /* ============================
+         Variáveis e Reset de CSS
+      ============================ */
+      :root {
+        --cor-creme: #fff5eb;
+        --cor-terracota: #a2675e;
+        --cor-marrom: #4d2c2c;
+        --cor-destaque: #ff9f68;
+        --cor-destaque-hover: #e08857;
+        --fonte-titulos: 'Playfair Display', serif;
+        --fonte-texto: 'Nunito Sans', sans-serif;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--cor-creme);
+        font-family: var(--fonte-texto);
+        line-height: 1.6;
+        color: var(--cor-marrom);
+        scroll-behavior: smooth;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+        transition: color 0.3s ease;
+      }
+      a:hover {
+        color: var(--cor-destaque);
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      /* ============================
+         Animações Gerais
+      ============================ */
+      @keyframes cardEntrance {
+        0% {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        60% {
+          opacity: 1;
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+      @keyframes menuEntrance {
+        0% {
+          opacity: 0;
+          transform: translateX(-50px);
+        }
+        60% {
+          opacity: 1;
+          transform: translateX(10px);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+      /* Elementos inicialmente ocultos */
+      .hidden {
+        opacity: 0;
+      }
+      /* Para os cards e step-cards */
+      .hidden:not(.menu-item) {
+        transform: translateY(30px);
+      }
+      /* Para os itens do menu */
+      .menu-item.hidden {
+        transform: translateX(-50px);
+      }
+      /* Quando se tornam visíveis, aplicam a animação de entrada */
+      .visible {
+        animation: cardEntrance 0.8s ease-out forwards;
+      }
+      /* Para os itens do menu, a classe "active" dispara a animação */
+      .menu-item.active {
+        animation: menuEntrance 0.8s ease-out forwards;
+        opacity: 1;
+      }
+
+      /* ============================
+         Header e Navbar
+      ============================ */
+      header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 245, 235, 0.95) 0%,
+          rgba(255, 240, 230, 0.95) 100%
+        );
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        height: 80px;
+        transition: background 0.3s ease, box-shadow 0.3s ease;
+      }
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.2rem 5%;
+        position: relative;
+        height: 100%;
+      }
+      .logo {
+        font-family: var(--fonte-titulos);
+        font-size: 2rem;
+        color: var(--cor-marrom);
+        position: relative;
+      }
+      .logo::after {
+        content: '🐾';
+        position: absolute;
+        right: -25px;
+        animation: pawJump 1.5s infinite;
+      }
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
+      .nav-links a {
+        font-weight: 600;
+        padding: 0.5rem;
+        position: relative;
+        transition: color 0.3s ease;
+      }
+      .nav-links a::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -4px;
+        width: 0;
+        height: 2px;
+        background: var(--cor-destaque);
+        transition: width 0.3s ease;
+      }
+      .nav-links a:hover::after,
+      .nav-links a:focus::after {
+        width: 100%;
+      }
+      .menu-mobile {
+        display: none;
+        font-size: 1.5rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+      }
+
+      /* ============================
+         Hero Section
+      ============================ */
+      .hero {
+        min-height: calc(100vh + 50px);
+        background: linear-gradient(
+            rgba(77, 44, 44, 0.2),
+            rgba(77, 44, 44, 0.2)
+          ),
+          url('./src/img/hero.webp') center/cover no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+        padding: 0 1rem;
+      }
+      .hero-content {
+        animation: textScale 1.5s ease-out;
+        z-index: 1;
+      }
+      .hero h1 {
+        font-size: 4.5rem;
+        margin-bottom: 1.5rem;
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      /* ============ CTA Aprimorado ============ */
+      .cta-button {
+        position: relative;
+        background: linear-gradient(
+          45deg,
+          var(--cor-destaque) 30%,
+          #ffbf94 100%
+        );
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 20px rgba(162, 103, 94, 0.3);
+        color: var(--cor-marrom);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+      }
+      .cta-button:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 8px 30px rgba(162, 103, 94, 0.5);
+      }
+      .cta-button::after {
+        content: '🐾';
+        position: absolute;
+        right: -20px;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0;
+        transition: all 0.3s ease;
+      }
+      .cta-button:hover::after {
+        right: 15px;
+        opacity: 1;
+      }
+      .cta-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.3) 100%
+        );
+        transform: skewX(-45deg);
+        transition: all 0.75s ease;
+      }
+      .cta-button:hover::before {
+        left: 150%;
+      }
+
+      /* ============================
+         Animação da Pata (Paw Jump & Float)
+      ============================ */
+      @keyframes pawJump {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+      @keyframes floatPulse {
+        0% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(5deg);
+        }
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+      }
+      .paw-float {
+        position: absolute;
+        width: 50px;
+        opacity: 0.5;
+        animation: floatPulse 3s ease-in-out infinite;
+      }
+
+      /* ============================
+         Conteúdo Principal (Main) e Seções
+      ============================ */
+      main {
+        margin-top: 80px;
+      }
+      section {
+        padding: 4rem 5%;
+        position: relative;
+      }
+      /* Separador entre seções (exceto a hero) */
+      section:not(.hero)::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 4px;
+        background: var(--cor-destaque);
+        margin: 2rem auto 0;
+        border-radius: 2px;
+      }
+      h2.section-title {
+        text-align: center;
+        font-family: var(--fonte-titulos);
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        color: var(--cor-marrom);
+      }
+
+      /* Cards de Adoção */
+      .adoption-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+      .cat-card {
+        background: #fff;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        position: relative;
+        cursor: pointer;
+        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      /* Ao passar o mouse, o card inteiro se move */
+      .cat-card:hover {
+        transform: translateY(-15px) rotate(2deg) scale(1.02);
+      }
+      .cat-card img {
+        height: 350px;
+        width: 100%;
+        object-fit: cover;
+        border-bottom: 4px solid var(--cor-destaque);
+      }
+      .cat-info {
+        padding: 1.5rem;
+        text-align: center;
+      }
+      .cat-info h3 {
+        margin-bottom: 0.5rem;
+        color: var(--cor-marrom);
+      }
+      .cat-info p {
+        color: var(--cor-marrom);
+        opacity: 0.8;
+      }
+
+      /* Processo de Adoção */
+      .process-steps {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3rem;
+        background: var(--cor-marrom);
+        color: #fff;
+        border-radius: 15px;
+        padding: 2rem;
+      }
+      .step-card {
+        position: relative;
+        text-align: center;
+        padding: 2rem;
+        background: rgba(255, 159, 104, 0.1);
+        border-radius: 15px;
+        transition: all 0.4s ease;
+        border: 2px solid transparent;
+      }
+      .step-card:hover {
+        background: rgba(255, 159, 104, 0.2);
+        transform: translateY(-10px);
+        border-color: var(--cor-destaque);
+      }
+      .step-card::before {
+        content: '🐱';
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 2rem;
+        opacity: 0;
+        transition: all 0.3s ease;
+      }
+      .step-card:hover::before {
+        opacity: 1;
+        top: -35px;
+      }
+
+      /* ============================
+         Menu Especial
+      ============================ */
+      .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+      .menu-item {
+        opacity: 0;
+        transform: translateX(-50px);
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 1.5rem;
+        background: #fff;
+        border-radius: 15px;
+        transition: all 0.6s ease;
+        position: relative;
+      }
+      .menu-item.active {
+        animation: menuEntrance 0.8s ease-out forwards;
+        opacity: 1;
+      }
+      .menu-item::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: var(--cor-destaque);
+        transition: all 0.4s ease;
+      }
+      .menu-item:hover::after {
+        width: 100%;
+        left: 0;
+      }
+      .menu-item i {
+        font-size: 2rem;
+        color: var(--cor-destaque);
+      }
+      .menu-item h3 {
+        font-size: 1.2rem;
+        color: var(--cor-marrom);
+      }
+
+      /* Galeria de Imagens */
+      .gallery {
+        column-count: 4;
+        column-gap: 1rem;
+        padding: 2rem 5%;
+      }
+      .gallery img {
+        margin-bottom: 1rem;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+        cursor: zoom-in;
+      }
+      .gallery img:hover {
+        transform: scale(1.03);
+      }
+
+      /* Seção Sobre */
+      .about {
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      /* Contato */
+      .contact-form {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+      .contact-form label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+      }
+      .contact-form input,
+      .contact-form textarea {
+        width: 100%;
+        padding: 0.8rem;
+        margin-bottom: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: inherit;
+      }
+      .contact-form textarea {
+        resize: vertical;
+        overflow-x: hidden;
+      }
+      .contact-form button {
+        background: var(--cor-destaque);
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 30px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        color: #fff;
+      }
+      .contact-form button:hover {
+        background: var(--cor-destaque-hover);
+      }
+
+      /* ============================
+         Footer
+      ============================ */
+      footer {
+        background: var(--cor-marrom);
+        color: #fff;
+        text-align: center;
+        padding: 1rem;
+      }
+      footer a {
+        color: var(--cor-destaque);
+      }
+
+      /* ============================
+         Animações Personalizadas
+      ============================ */
+      @keyframes textScale {
+        from {
+          transform: scale(1.2);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      /* ============================
+         Responsividade
+      ============================ */
+      @media (max-width: 768px) {
+        .hero h1 {
+          font-size: 2.8rem;
+        }
+        .process-steps {
+          grid-template-columns: 1fr;
+        }
+        .menu-grid {
+          grid-template-columns: 1fr;
+        }
+        .gallery {
+          column-count: 2;
+        }
+        .nav-links {
+          display: flex !important;
+          flex-direction: column !important;
+          position: absolute !important;
+          top: 100% !important;
+          left: 0 !important;
+          width: 100% !important;
+          background: rgba(255, 245, 235, 0.98) !important;
+          padding: 1rem !important;
+          transform: translateY(-20px) !important;
+          opacity: 0 !important;
+          transition: transform 0.5s ease, opacity 0.5s ease !important;
+        }
+        .nav-links.active {
+          transform: translateY(0) !important;
+          opacity: 1 !important;
+        }
+        .menu-mobile {
+          display: block !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Header e Navbar -->
+    <header>
+      <nav class="navbar" aria-label="Navegação Principal">
+        <a href="./index.html" class="logo">Catspresso</a>
+        <div class="nav-links" id="nav-menu">
+          <a href="#sobre" aria-current="page">Sobre</a>
+          <a href="#adocao">Adoção</a>
+          <a href="#menu">Menu</a>
+          <a href="#contato">Contato</a>
+        </div>
+        <button
+          class="menu-mobile"
+          aria-label="Abrir menu de navegação"
+          aria-controls="nav-menu"
+          aria-expanded="false"
+        >
+          ☰
+        </button>
+      </nav>
+    </header>
+
+    <main role="main">
+      <!-- Hero Section -->
+      <section class="hero" aria-label="Seção Principal">
+        <div class="hero-content">
+          <h1>Um Café, Mil Ronrons</h1>
+          <button
+            class="cta-button"
+            onclick="document.getElementById('adocao').scrollIntoView({ behavior: 'smooth' })"
+          >
+            Conheça nossos gatinhos
+          </button>
+        </div>
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/8277/8277564.png"
+          class="paw-float"
+          style="top: 20%; left: 10%"
+          alt="Pata decorativa"
+        />
+      </section>
+
+      <!-- Seção Sobre -->
+      <section id="sobre">
+        <h2 class="section-title">Sobre Nós</h2>
+        <div class="about">
+          <p>
+            Bem-vindo ao Catspresso, onde café de qualidade encontra o amor
+            pelos felinos. Nosso espaço foi criado para unir apaixonados por
+            gatos e café, proporcionando momentos únicos de aconchego e cuidado
+            com nossos amigos de quatro patas.
+          </p>
+        </div>
+      </section>
+
+      <!-- Seção de Adoção -->
+      <section id="adocao">
+        <h2 class="section-title">Adote um Amigo</h2>
+        <div class="adoption-grid">
+          <!-- Cada card inicia com "hidden" para ser animado pelo Intersection Observer -->
+          <article class="cat-card hidden">
+            <img
+              src="./src/img/luna.webp"
+              alt="Gato Luna"
+              loading="lazy"
+              width="300"
+              height="300"
+            />
+            <div class="cat-info">
+              <h3>Luna</h3>
+              <p>1 ano • Fêmea • Brincalhona</p>
+              <p>Adora colo e brinquedos de penas</p>
+            </div>
+          </article>
+          <article class="cat-card hidden">
+            <img
+              src="./src/img/thor.webp"
+              alt="Gato Thor"
+              loading="lazy"
+              width="300"
+              height="300"
+            />
+            <div class="cat-info">
+              <h3>Thor</h3>
+              <p>3 anos • Macho • Tranquilo</p>
+              <p>Perfeito para apartamentos</p>
+            </div>
+          </article>
+        </div>
+
+        <!-- Processo de Adoção -->
+        <div class="process-steps">
+          <div class="step-card hidden">
+            <h3>1. Visita</h3>
+            <p>Conheça nossos gatos em um ambiente acolhedor.</p>
+          </div>
+          <div class="step-card hidden">
+            <h3>2. Conexão</h3>
+            <p>Encontre seu companheiro ideal.</p>
+          </div>
+          <div class="step-card hidden">
+            <h3>3. Adoção</h3>
+            <p>Processo facilitado com todo suporte necessário.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Seção Menu -->
+      <section id="menu">
+        <h2 class="section-title">Nosso Menu</h2>
+        <div class="menu-grid">
+          <!-- Os itens do menu iniciam com "hidden" para serem animados via Intersection Observer -->
+          <div class="menu-item hidden">
+            <i class="fas fa-coffee"></i>
+            <div>
+              <h3>Café Especial</h3>
+              <p>Grãos 100% arábica torrados diariamente.</p>
+            </div>
+          </div>
+          <div class="menu-item hidden">
+            <i class="fas fa-cookie"></i>
+            <div>
+              <h3>Doces Artesanais</h3>
+              <p>Confeitos com ingredientes orgânicos.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Galeria de Imagens -->
+      <section aria-label="Galeria de Imagens">
+        <h2 class="section-title">Galeria</h2>
+        <div class="gallery">
+          <img src="./src/img/galeria1.webp" alt="Galeria 1" loading="lazy" />
+          <img src="./src/img/galeria2.webp" alt="Galeria 2" loading="lazy" />
+          <img src="./src/img/galeria3.webp" alt="Galeria 3" loading="lazy" />
+        </div>
+      </section>
+
+      <!-- Seção Contato -->
+      <section id="contato">
+        <h2 class="section-title">Entre em Contato</h2>
+        <div class="contact-form">
+          <form action="#" method="post">
+            <label for="nome">Nome</label>
+            <input
+              type="text"
+              id="nome"
+              name="nome"
+              placeholder="Seu nome"
+              required
+            />
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Seu email"
+              required
+            />
+            <label for="mensagem">Mensagem</label>
+            <textarea
+              id="mensagem"
+              name="mensagem"
+              rows="5"
+              placeholder="Sua mensagem"
+              required
+            ></textarea>
+            <button type="submit">Enviar Mensagem</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <p>
+        &copy; 2025 Catspresso. Todos os direitos reservados. | Desenvolvido com
+        <i class="fas fa-heart" aria-hidden="true"></i> por Cat Lovers
+      </p>
+    </footer>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // scroll suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', e => {
+            e.preventDefault();
+
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            const offset = 80;
+
+            if (targetElement) {
+              const targetPosition =
+                targetElement.getBoundingClientRect().top +
+                window.scrollY -
+                offset;
+
+              window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth',
+              });
+            }
+          });
+        });
+
+        // form
+        document.querySelector('form').addEventListener('submit', e => {
+          e.preventDefault();
+          alert('Sua mensagem foi enviada. Entraremos em contato em breve!');
+          e.target.reset();
+        });
+
+        // Mobile Menu Toggle com atualização de atributo ARIA e animação
+        const menuButton = document.querySelector('.menu-mobile');
+        const navMenu = document.getElementById('nav-menu');
+        menuButton.addEventListener('click', () => {
+          navMenu.classList.toggle('active');
+          const expanded =
+            menuButton.getAttribute('aria-expanded') === 'true'
+              ? 'false'
+              : 'true';
+          menuButton.setAttribute('aria-expanded', expanded);
+        });
+
+        // Intersection Observer para animar os cat-cards e step-cards quando entrarem na viewport
+        const observer = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                entry.target.classList.remove('hidden');
+                obs.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1, rootMargin: '0px 0px -100px 0px' },
+        );
+        document.querySelectorAll('.cat-card, .step-card').forEach(el => {
+          observer.observe(el);
+        });
+
+        // Adiciona listener de "animationend" para remover a classe "visible" dos cat-cards
+        document.querySelectorAll('.cat-card').forEach(card => {
+          card.addEventListener('animationend', () => {
+            card.classList.remove('visible');
+          });
+        });
+
+        // Intersection Observer específico para a seção "Nosso Menu"
+        const menuSection = document.getElementById('menu');
+        const observerMenu = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                // Para cada item do menu, aplica um delay para efeito de stagger
+                const menuItems = entry.target.querySelectorAll('.menu-item');
+                menuItems.forEach((item, index) => {
+                  setTimeout(() => {
+                    item.classList.add('active');
+                    item.classList.remove('hidden');
+                  }, index * 200);
+                });
+                obs.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1, rootMargin: '0px 0px -100px 0px' },
+        );
+        observerMenu.observe(menuSection);
+      });
+    </script>
+  </body>
+</html>
