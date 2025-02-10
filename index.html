@@ -777,12 +777,12 @@
 
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        // scroll suave
+        // Scroll suave
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
           anchor.addEventListener('click', e => {
             e.preventDefault();
 
-            const targetId = this.getAttribute('href');
+            const targetId = e.currentTarget.getAttribute('href');
             const targetElement = document.querySelector(targetId);
             const offset = 80;
 
