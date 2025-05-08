@@ -8,7 +8,7 @@
     <!-- ======= Metadados ======= -->
     <meta
       name="description"
-      content="KATZEN & KAFFEE — Café especial com adoção de gatos. Encontre seu companheiro felino enquanto desfruta de um café premium."
+      content="KATZEN &amp; KAFFEE — Café especial com adoção de gatos. Encontre seu companheiro felino enquanto desfruta de um café premium."
     />
     <meta
       name="keywords"
@@ -16,7 +16,7 @@
     />
     <meta
       property="og:title"
-      content="KATZEN & KAFFEE — Café & Adoção Felina"
+      content="KATZEN &amp; KAFFEE — Café &amp; Adoção Felina"
     />
     <meta property="og:type" content="website" />
 
@@ -162,7 +162,6 @@
         position: fixed;
         top: 0;
         width: 100%;
-        height: 80px;
         background: linear-gradient(
           90deg,
           rgba(255, 245, 235, 0.95) 0%,
@@ -171,15 +170,16 @@
         backdrop-filter: blur(10px);
         box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
         z-index: 1000;
-        transition: background 0.3s ease, box-shadow 0.3s ease;
       }
       .navbar {
-        height: 100%;
-        padding: 1.2rem 5%;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        position: relative;
+        padding: 1.2rem 5%;
+      }
+      .separate-button {
+        display: flex;
+        gap: 1rem;
       }
       .logo {
         font-family: var(--fonte-titulo);
@@ -192,6 +192,7 @@
         right: -25px;
         animation: pawJump 1.5s infinite;
       }
+
       .nav-links {
         display: flex;
         gap: 2rem;
@@ -215,6 +216,14 @@
       .nav-links a:focus::after {
         width: 100%;
       }
+
+      /* grupo rastreio + hamburguer */
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
       .menu-mobile {
         display: none;
         font-size: 1.6rem;
@@ -243,7 +252,7 @@
          4. Hero
       ============================ */
       .hero {
-        min-height: calc(100vh + 50px);
+        min-height: 100vh;
         background: linear-gradient(
             rgba(77, 44, 44, 0.2),
             rgba(77, 44, 44, 0.2)
@@ -640,6 +649,23 @@
         }
       }
       @media (max-width: 768px) {
+        .navbar {
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+        .logo {
+          order: 1;
+          text-align: center;
+        }
+        .nav-actions {
+          order: 2;
+          width: 100%;
+          justify-content: space-between;
+        }
+        .menu-mobile {
+          display: block;
+        }
+
         .hero h1 {
           font-size: 2.8rem;
         }
@@ -649,6 +675,12 @@
         .gallery {
           column-count: 2;
         }
+        .menu-grid {
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+        .adoption-grid {
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
         .nav-links {
           position: absolute;
           top: 100%;
@@ -656,18 +688,57 @@
           width: 100%;
           background: rgba(255, 245, 235, 0.98);
           flex-direction: column;
-          transform: translateY(-20px);
+          align-items: center;
+          gap: 1rem;
+          padding: 1rem 0;
+          transform: translateY(-120%);
           opacity: 0;
           transition: transform 0.5s ease, opacity 0.5s ease;
-          padding: 1rem;
-          gap: 1rem;
         }
         .nav-links.active {
           transform: translateY(0);
           opacity: 1;
         }
+        /* reorganiza itens do nav em mobile */
+        .navbar {
+          flex-wrap: wrap;
+        }
+
+        .logo {
+          order: 1;
+          width: 100%;
+          text-align: center;
+          margin-bottom: 0.5rem;
+        }
+
+        .btn-rastreio {
+          order: 2;
+          margin-right: auto; /* encosta na esquerda */
+        }
+
         .menu-mobile {
-          display: block;
+          order: 3;
+          margin-left: auto; /* encosta na direita */
+        }
+
+        .nav-links {
+          order: 4;
+          width: 100%;
+        }
+      }
+      @media (max-width: 576px) {
+        .hero h1 {
+          font-size: 2.2rem;
+        }
+        .tabs {
+          gap: 0.5rem;
+        }
+        .tab {
+          font-size: 0.9rem;
+          padding: 0.5rem 1rem;
+        }
+        .gallery {
+          column-count: 1;
         }
       }
     </style>
@@ -678,6 +749,7 @@
     <header>
       <nav class="navbar" aria-label="Navegação principal">
         <a href="#hero" class="logo">KATZEN &amp; KAFFEE</a>
+
         <div class="nav-links" id="nav-menu">
           <a href="#sobre">Sobre</a>
           <a href="#adocao">Adoção</a>
@@ -685,23 +757,25 @@
           <a href="#contato">Contato</a>
         </div>
 
-        <!-- Botões extras -->
-        <button
-          class="btn-rastreio"
-          type="button"
-          data-modal="rastreio-modal"
-          aria-label="Rastrear pedido"
-        >
-          <i class="fas fa-box-open"></i> Rastreio
-        </button>
-        <button
-          class="menu-mobile"
-          aria-label="Abrir menu de navegação"
-          aria-controls="nav-menu"
-          aria-expanded="false"
-        >
-          ☰
-        </button>
+        <div class="nav-actions">
+          <button
+            class="btn-rastreio"
+            type="button"
+            data-modal="rastreio-modal"
+            aria-label="Rastrear pedido"
+          >
+            <i class="fas fa-box-open"></i> Rastreio
+          </button>
+
+          <button
+            class="menu-mobile"
+            aria-label="Abrir menu de navegação"
+            aria-controls="nav-menu"
+            aria-expanded="false"
+          >
+            ☰
+          </button>
+        </div>
       </nav>
     </header>
 
@@ -1117,6 +1191,14 @@
                 window.pageYOffset -
                 offset;
               window.scrollTo({ top, behavior: 'smooth' });
+            }
+            // Fecha menu mobile ao clicar em link
+            const navMenu = document.getElementById('nav-menu');
+            if (navMenu.classList.contains('active')) {
+              navMenu.classList.remove('active');
+              document
+                .querySelector('.menu-mobile')
+                .setAttribute('aria-expanded', 'false');
             }
           });
         });
