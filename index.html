@@ -3,33 +3,42 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KATZEN & KAFFEE - Café & Adoção Felina</title>
+    <title>KATZEN &amp; KAFFEE — Café &amp; Adoção Felina</title>
+
+    <!-- ======= Metadados ======= -->
     <meta
       name="description"
-      content="KATZEN & KAFFEE - Café especial com adoção de gatos. Encontre seu companheiro felino enquanto desfruta de um café premium."
+      content="KATZEN & KAFFEE — Café especial com adoção de gatos. Encontre seu companheiro felino enquanto desfruta de um café premium."
     />
     <meta
       name="keywords"
       content="café, adoção de gatos, gatitos, cafeteria, animais"
     />
-    <meta property="og:title" content="Catspresso - Café & Adoção Felina" />
+    <meta
+      property="og:title"
+      content="KATZEN & KAFFEE — Café & Adoção Felina"
+    />
     <meta property="og:type" content="website" />
 
+    <!-- ======= Fontes e Ícones ======= -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&family=Playfair+Display:wght@400;700&display=swap"
       rel="stylesheet"
     />
-
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-nkuXHc5p5OXxZFy3Ck6xjLmiQlH7gff4u9gg5GMnXamQijYEtpc5LV0dT5v5VGrNwCbPYU8Y5URo8GUGi1Xykg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
 
+    <!-- ======= Estilos Embutidos ======= -->
     <style>
       /* ============================
-         Variáveis e Reset de CSS
+         1. Variáveis e Reset
       ============================ */
       :root {
         --cor-creme: #fff5eb;
@@ -37,10 +46,12 @@
         --cor-marrom: #4d2c2c;
         --cor-destaque: #ff9f68;
         --cor-destaque-hover: #e08857;
-        --fonte-titulos: 'Playfair Display', serif;
+        --fonte-titulo: 'Playfair Display', serif;
         --fonte-texto: 'Nunito Sans', sans-serif;
       }
-      * {
+      *,
+      *::before,
+      *::after {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
@@ -52,6 +63,11 @@
         color: var(--cor-marrom);
         scroll-behavior: smooth;
       }
+      img {
+        max-width: 100%;
+        display: block;
+        height: auto;
+      }
       a {
         text-decoration: none;
         color: inherit;
@@ -60,14 +76,9 @@
       a:hover {
         color: var(--cor-destaque);
       }
-      img {
-        max-width: 100%;
-        height: auto;
-        display: block;
-      }
 
       /* ============================
-         Animações Gerais
+         2. Animações
       ============================ */
       @keyframes cardEntrance {
         0% {
@@ -95,35 +106,63 @@
           transform: translateX(0);
         }
       }
-      /* Elementos inicialmente ocultos */
+      @keyframes textScale {
+        from {
+          transform: scale(1.2);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      @keyframes pawJump {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+      @keyframes floatPulse {
+        0% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(5deg);
+        }
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+      }
+
+      /* Utilidades de visibilidade */
       .hidden {
         opacity: 0;
       }
-      /* Para os cards e step-cards */
       .hidden:not(.menu-item) {
         transform: translateY(30px);
       }
-      /* Para os itens do menu */
       .menu-item.hidden {
         transform: translateX(-50px);
       }
-      /* Quando se tornam visíveis, aplicam a animação de entrada */
       .visible {
         animation: cardEntrance 0.8s ease-out forwards;
       }
-      /* Para os itens do menu, a classe "active" dispara a animação */
       .menu-item.active {
         animation: menuEntrance 0.8s ease-out forwards;
         opacity: 1;
       }
 
       /* ============================
-         Header e Navbar
+         3. Header e Navegação
       ============================ */
       header {
         position: fixed;
         top: 0;
         width: 100%;
+        height: 80px;
         background: linear-gradient(
           90deg,
           rgba(255, 245, 235, 0.95) 0%,
@@ -132,21 +171,19 @@
         backdrop-filter: blur(10px);
         box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
         z-index: 1000;
-        height: 80px;
         transition: background 0.3s ease, box-shadow 0.3s ease;
       }
       .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1.2rem 5%;
-        position: relative;
         height: 100%;
+        padding: 1.2rem 5%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
       }
       .logo {
-        font-family: var(--fonte-titulos);
+        font-family: var(--fonte-titulo);
         font-size: 2rem;
-        color: var(--cor-marrom);
         position: relative;
       }
       .logo::after {
@@ -161,17 +198,16 @@
       }
       .nav-links a {
         font-weight: 600;
-        padding: 0.5rem;
         position: relative;
-        transition: color 0.3s ease;
+        padding: 0.5rem;
       }
       .nav-links a::after {
         content: '';
         position: absolute;
-        left: 0;
         bottom: -4px;
-        width: 0;
+        left: 0;
         height: 2px;
+        width: 0;
         background: var(--cor-destaque);
         transition: width 0.3s ease;
       }
@@ -181,14 +217,30 @@
       }
       .menu-mobile {
         display: none;
-        font-size: 1.5rem;
+        font-size: 1.6rem;
         background: none;
         border: none;
         cursor: pointer;
       }
+      .btn-rastreio {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.6rem 1rem;
+        border-radius: 30px;
+        border: 2px solid var(--cor-destaque);
+        background: #ffffff;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+      .btn-rastreio:hover {
+        background: var(--cor-destaque);
+        color: #ffffff;
+      }
 
       /* ============================
-         Hero Section
+         4. Hero
       ============================ */
       .hero {
         min-height: calc(100vh + 50px);
@@ -201,22 +253,20 @@
         align-items: center;
         justify-content: center;
         text-align: center;
-        color: #fff;
+        color: #ffffff;
         position: relative;
         overflow: hidden;
         padding: 0 1rem;
       }
       .hero-content {
-        animation: textScale 1.5s ease-out;
         z-index: 1;
+        animation: textScale 1.5s ease-out;
       }
       .hero h1 {
         font-size: 4.5rem;
         margin-bottom: 1.5rem;
         text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
       }
-
-      /* ============ CTA Aprimorado ============ */
       .cta-button {
         position: relative;
         background: linear-gradient(
@@ -271,30 +321,6 @@
       .cta-button:hover::before {
         left: 150%;
       }
-
-      /* ============================
-         Animação da Pata (Paw Jump & Float)
-      ============================ */
-      @keyframes pawJump {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-10px);
-        }
-      }
-      @keyframes floatPulse {
-        0% {
-          transform: translateY(0) rotate(0deg);
-        }
-        50% {
-          transform: translateY(-20px) rotate(5deg);
-        }
-        100% {
-          transform: translateY(0) rotate(0deg);
-        }
-      }
       .paw-float {
         position: absolute;
         width: 50px;
@@ -303,7 +329,7 @@
       }
 
       /* ============================
-         Conteúdo Principal (Main) e Seções
+         5. Estrutura Geral
       ============================ */
       main {
         margin-top: 80px;
@@ -312,7 +338,6 @@
         padding: 4rem 5%;
         position: relative;
       }
-      /* Separador entre seções (exceto a hero) */
       section:not(.hero)::after {
         content: '';
         display: block;
@@ -324,13 +349,27 @@
       }
       h2.section-title {
         text-align: center;
-        font-family: var(--fonte-titulos);
+        font-family: var(--fonte-titulo);
         font-size: 2.5rem;
         margin-bottom: 2rem;
-        color: var(--cor-marrom);
       }
 
-      /* Cards de Adoção */
+      /* ============================
+         6. Seção Sobre
+      ============================ */
+      .about {
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+        text-align: center;
+      }
+
+      /* ============================
+         7. Cards de Adoção
+      ============================ */
       .adoption-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -338,7 +377,7 @@
         margin-bottom: 2rem;
       }
       .cat-card {
-        background: #fff;
+        background: #ffffff;
         border-radius: 20px;
         overflow: hidden;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -346,13 +385,12 @@
         cursor: pointer;
         transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       }
-      /* Ao passar o mouse, o card inteiro se move */
       .cat-card:hover {
         transform: translateY(-15px) rotate(2deg) scale(1.02);
       }
       .cat-card img {
-        height: 350px;
         width: 100%;
+        height: 350px;
         object-fit: cover;
         border-bottom: 4px solid var(--cor-destaque);
       }
@@ -362,30 +400,31 @@
       }
       .cat-info h3 {
         margin-bottom: 0.5rem;
-        color: var(--cor-marrom);
       }
       .cat-info p {
-        color: var(--cor-marrom);
         opacity: 0.8;
       }
 
-      /* Processo de Adoção */
+      /* ============================
+         8. Processo de Adoção
+      ============================ */
       .process-steps {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 3rem;
         background: var(--cor-marrom);
-        color: #fff;
+        color: #ffffff;
         border-radius: 15px;
         padding: 2rem;
       }
       .step-card {
         position: relative;
         text-align: center;
-        padding: 2rem;
         background: rgba(255, 159, 104, 0.1);
         border-radius: 15px;
-        transition: all 0.4s ease;
+        padding: 2rem;
+        transition: transform 0.4s ease, background 0.4s ease,
+          border-color 0.4s ease;
         border: 2px solid transparent;
       }
       .step-card:hover {
@@ -404,33 +443,51 @@
         transition: all 0.3s ease;
       }
       .step-card:hover::before {
-        opacity: 1;
         top: -35px;
+        opacity: 1;
       }
 
       /* ============================
-         Menu Especial
+         9. Menu com Abas
       ============================ */
+      .tabs {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+      }
+      .tab {
+        padding: 0.6rem 1.4rem;
+        border-radius: 30px;
+        border: 2px solid var(--cor-destaque);
+        background: #ffffff;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.3s ease, color 0.3s ease;
+      }
+      .tab:hover,
+      .tab.active {
+        background: var(--cor-destaque);
+        color: #ffffff;
+      }
       .menu-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 2rem;
       }
       .menu-item {
-        opacity: 0;
-        transform: translateX(-50px);
         display: flex;
         align-items: center;
         gap: 1.5rem;
+        background: #ffffff;
         padding: 1.5rem;
-        background: #fff;
         border-radius: 15px;
-        transition: all 0.6s ease;
+        transition: transform 0.3s ease;
         position: relative;
       }
-      .menu-item.active {
-        animation: menuEntrance 0.8s ease-out forwards;
-        opacity: 1;
+      .menu-item:hover {
+        transform: translateY(-5px);
       }
       .menu-item::after {
         content: '';
@@ -440,98 +497,133 @@
         width: 0;
         height: 2px;
         background: var(--cor-destaque);
-        transition: all 0.4s ease;
+        transition: width 0.4s ease, left 0.4s ease;
       }
       .menu-item:hover::after {
         width: 100%;
         left: 0;
       }
-
       .menu-item i {
         font-size: 2rem;
         color: var(--cor-destaque);
       }
-      .menu-item h3 {
-        font-size: 1.2rem;
-        color: var(--cor-marrom);
-      }
 
-      /* Galeria de Imagens */
+      /* ============================
+         10. Galeria
+      ============================ */
       .gallery {
         column-count: 4;
         column-gap: 1rem;
-        padding: 2rem 5%;
       }
       .gallery img {
-        margin-bottom: 1rem;
         border-radius: 10px;
-        transition: transform 0.3s ease;
+        margin-bottom: 1rem;
         cursor: zoom-in;
+        transition: transform 0.3s ease;
       }
       .gallery img:hover {
-        transform: scale(1.03);
+        transform: scale(1.04);
       }
 
-      /* Seção Sobre */
-      .about {
-        background: #fff;
-        border-radius: 15px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        padding: 2rem;
-        max-width: 800px;
-        margin: 0 auto;
-        text-align: center;
-      }
-
-      /* Contato */
+      /* ============================
+         11. Contato
+      ============================ */
       .contact-form {
+        background: #ffffff;
+        padding: 2rem;
+        border-radius: 15px;
         max-width: 600px;
         margin: 0 auto;
-        background: #fff;
-        padding: 2rem;
-        border-radius: 15px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
       }
       .contact-form label {
         display: block;
         margin-bottom: 0.5rem;
-        font-weight: 600;
+        font-weight: 700;
       }
       .contact-form input,
       .contact-form textarea {
         width: 100%;
         padding: 0.8rem;
-        margin-bottom: 1rem;
-        border: 1px solid #ccc;
+        border: 1px solid #cccccc;
         border-radius: 8px;
+        margin-bottom: 1rem;
+        font-size: 1rem;
         font-family: inherit;
-        font-size: inherit;
       }
       .contact-form textarea {
         resize: vertical;
-        overflow-x: hidden;
       }
       .contact-form button {
         background: var(--cor-destaque);
+        color: #ffffff;
         border: none;
         padding: 0.8rem 1.5rem;
         border-radius: 30px;
-        font-size: 1rem;
-        font-weight: 600;
+        font-weight: 700;
         cursor: pointer;
         transition: background 0.3s ease;
-        color: #fff;
       }
       .contact-form button:hover {
         background: var(--cor-destaque-hover);
       }
 
       /* ============================
-         Footer
+         12. Modal de Rastreio
+      ============================ */
+      .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+      }
+      .modal.hidden {
+        display: none;
+      }
+      .modal-content {
+        background: #ffffff;
+        padding: 2rem;
+        border-radius: 15px;
+        width: 90%;
+        max-width: 400px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        text-align: center;
+      }
+      .modal-content h3 {
+        margin-bottom: 1rem;
+        font-family: var(--fonte-titulo);
+      }
+      .modal-content input {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #cccccc;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+      }
+      .btn-primary {
+        background: var(--cor-destaque);
+        color: #ffffff;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 30px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+      .btn-primary:hover {
+        background: var(--cor-destaque-hover);
+      }
+
+      /* ============================
+         13. Footer
       ============================ */
       footer {
         background: var(--cor-marrom);
-        color: #fff;
+        color: #ffffff;
         text-align: center;
         padding: 1rem;
       }
@@ -540,22 +632,13 @@
       }
 
       /* ============================
-         Animações Personalizadas
+         14. Responsividade
       ============================ */
-      @keyframes textScale {
-        from {
-          transform: scale(1.2);
-          opacity: 0;
-        }
-        to {
-          transform: scale(1);
-          opacity: 1;
+      @media (max-width: 992px) {
+        .gallery {
+          column-count: 3;
         }
       }
-
-      /* ============================
-         Responsividade
-      ============================ */
       @media (max-width: 768px) {
         .hero h1 {
           font-size: 2.8rem;
@@ -563,47 +646,54 @@
         .process-steps {
           grid-template-columns: 1fr;
         }
-        .menu-grid {
-          grid-template-columns: 1fr;
-        }
         .gallery {
           column-count: 2;
         }
         .nav-links {
-          display: flex !important;
-          flex-direction: column !important;
-          position: absolute !important;
-          top: 100% !important;
-          left: 0 !important;
-          width: 100% !important;
-          background: rgba(255, 245, 235, 0.98) !important;
-          padding: 1rem !important;
-          transform: translateY(-20px) !important;
-          opacity: 0 !important;
-          transition: transform 0.5s ease, opacity 0.5s ease !important;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background: rgba(255, 245, 235, 0.98);
+          flex-direction: column;
+          transform: translateY(-20px);
+          opacity: 0;
+          transition: transform 0.5s ease, opacity 0.5s ease;
+          padding: 1rem;
+          gap: 1rem;
         }
         .nav-links.active {
-          transform: translateY(0) !important;
-          opacity: 1 !important;
+          transform: translateY(0);
+          opacity: 1;
         }
         .menu-mobile {
-          display: block !important;
+          display: block;
         }
       }
     </style>
   </head>
 
   <body>
-    <!-- Header e Navbar -->
+    <!-- ======= Header ======= -->
     <header>
-      <nav class="navbar" aria-label="Navegação Principal">
-        <a href="./index.html" class="logo">KATZEN & KAFFEE</a>
+      <nav class="navbar" aria-label="Navegação principal">
+        <a href="#hero" class="logo">KATZEN &amp; KAFFEE</a>
         <div class="nav-links" id="nav-menu">
-          <a href="#sobre" aria-current="page">Sobre</a>
+          <a href="#sobre">Sobre</a>
           <a href="#adocao">Adoção</a>
           <a href="#menu">Menu</a>
           <a href="#contato">Contato</a>
         </div>
+
+        <!-- Botões extras -->
+        <button
+          class="btn-rastreio"
+          type="button"
+          data-modal="rastreio-modal"
+          aria-label="Rastrear pedido"
+        >
+          <i class="fas fa-box-open"></i> Rastreio
+        </button>
         <button
           class="menu-mobile"
           aria-label="Abrir menu de navegação"
@@ -615,13 +705,34 @@
       </nav>
     </header>
 
+    <!-- ======= Modal de Rastreio ======= -->
+    <div
+      id="rastreio-modal"
+      class="modal hidden"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="modal-content">
+        <h3>Rastreio de Pedido</h3>
+        <p>Insira seu código para consultar o status.</p>
+        <input
+          type="text"
+          placeholder="#KZ123BR"
+          aria-label="Código de rastreio"
+        />
+        <button class="btn-primary" type="button">Rastrear</button>
+      </div>
+    </div>
+
+    <!-- ======= Conteúdo Principal ======= -->
     <main role="main">
-      <!-- Hero Section -->
-      <section class="hero" aria-label="Seção Principal">
+      <!-- Hero -->
+      <section id="hero" class="hero" aria-label="Seção principal">
         <div class="hero-content">
           <h1>Um Café, Mil Ronrons</h1>
           <button
             class="cta-button"
+            type="button"
             onclick="document.getElementById('adocao').scrollIntoView({ behavior: 'smooth' })"
           >
             Conheça nossos gatinhos
@@ -629,37 +740,38 @@
         </div>
         <img
           src="https://cdn-icons-png.flaticon.com/512/8277/8277564.png"
+          alt="Pata decorativa"
           class="paw-float"
           style="top: 20%; left: 10%"
-          alt="Pata decorativa"
         />
       </section>
 
-      <!-- Seção Sobre -->
+      <!-- Sobre -->
       <section id="sobre">
         <h2 class="section-title">Sobre Nós</h2>
         <div class="about">
           <p>
-            Bem-vindo ao KATZEN & KAFFEE, onde café de qualidade encontra o amor
-            pelos felinos. Nosso espaço foi criado para unir apaixonados por
-            gatos e café, proporcionando momentos únicos de aconchego e cuidado
-            com nossos amigos de quatro patas.
+            Bem-vindo ao KATZEN &amp; KAFFEE, onde café de qualidade encontra o
+            amor pelos felinos. Nosso espaço foi criado para unir apaixonados
+            por gatos e café, proporcionando momentos únicos de aconchego e
+            cuidado com nossos amigos de quatro patas.
           </p>
         </div>
       </section>
 
-      <!-- Seção de Adoção -->
+      <!-- Adoção -->
       <section id="adocao">
         <h2 class="section-title">Adote um Amigo</h2>
+
         <div class="adoption-grid">
-          <!-- Cada card inicia com "hidden" para ser animado pelo Intersection Observer -->
+          <!-- Exemplo de gatinho -->
           <article class="cat-card hidden">
             <img
               src="./src/img/luna.webp"
-              alt="Gato Luna"
-              loading="lazy"
+              alt="Gata Luna"
               width="300"
               height="300"
+              loading="lazy"
             />
             <div class="cat-info">
               <h3>Luna</h3>
@@ -667,13 +779,14 @@
               <p>Adora colo e brinquedos de penas</p>
             </div>
           </article>
+
           <article class="cat-card hidden">
             <img
               src="./src/img/thor.webp"
               alt="Gato Thor"
-              loading="lazy"
               width="300"
               height="300"
+              loading="lazy"
             />
             <div class="cat-info">
               <h3>Thor</h3>
@@ -695,87 +808,62 @@
           </div>
           <div class="step-card hidden">
             <h3>3. Adoção</h3>
-            <p>Processo facilitado com todo suporte necessário.</p>
+            <p>
+              Processo facilitado com todo suporte necessário para você e seu
+              novo amigo.
+            </p>
           </div>
         </div>
       </section>
 
-      <!-- Seção Menu -->
+      <!-- Menu com Abas -->
       <section id="menu">
         <h2 class="section-title">Nosso Menu</h2>
-        <div class="menu-grid">
-          <div class="menu-item hidden">
-            <i class="fas fa-cookie"></i>
-            <div>
-              <h3>Macarons</h3>
-              <p>
-                Doce redondo com cobertura crocante e interior cremoso. Origem
-                italiana e patrimônio gastronômico francês.
-              </p>
-            </div>
-          </div>
-          <div class="menu-item hidden">
-            <i class="fas fa-bread-slice"></i>
-            <div>
-              <h3>Semla</h3>
-              <p>
-                Pão de cardamomo recheado com massa de amêndoas e chantilly.
-                Tradicional da Suécia no período que antecede a Páscoa.
-              </p>
-            </div>
-          </div>
-          <div class="menu-item hidden">
-            <i class="fas fa-egg"></i>
-            <div>
-              <h3>Stroopwafel</h3>
-              <p>
-                Biscoito holandês de massa fina prensada com calda de caramelo.
-                Clássico patrimônio gastronômico da Holanda.
-              </p>
-            </div>
-          </div>
-          <div class="menu-item hidden">
-            <i class="fas fa-cookie-bite"></i>
-            <div>
-              <h3>Pączki</h3>
-              <p>
-                Rosquinha polonesa recheada, tradição que antecede a Páscoa
-                desde a Idade Média.
-              </p>
-            </div>
-          </div>
-          <div class="menu-item hidden">
-            <i class="fas fa-th-large"></i>
-            <div>
-              <h3>Waffles</h3>
-              <p>
-                Pãozinho quadriculado medieval da Bélgica, perfeito para várias
-                coberturas.
-              </p>
-            </div>
-          </div>
-          <div class="menu-item hidden">
-            <i class="fas fa-bowl-food"></i>
-            <div>
-              <h3>Pudim</h3>
-              <p>
-                Doce trazido por portugueses no século XVI, feito originalmente
-                em conventos.
-              </p>
-            </div>
-          </div>
-          <div class="menu-item hidden">
-            <i class="fas fa-birthday-cake"></i>
+
+        <!-- Abas -->
+        <div class="tabs" role="tablist">
+          <button
+            class="tab active"
+            data-cat="todos"
+            role="tab"
+            aria-selected="true"
+          >
+            Todos
+          </button>
+          <button class="tab" data-cat="bolos" role="tab" aria-selected="false">
+            Bolos
+          </button>
+          <button
+            class="tab"
+            data-cat="sorvetes"
+            role="tab"
+            aria-selected="false"
+          >
+            Sorvetes
+          </button>
+          <button class="tab" data-cat="doces" role="tab" aria-selected="false">
+            Doces
+          </button>
+          <button class="tab" data-cat="cafes" role="tab" aria-selected="false">
+            Cafés
+          </button>
+        </div>
+
+        <!-- Itens -->
+        <div class="menu-grid" id="menu-grid">
+          <!-- ================== BOLOS ================== -->
+          <div class="menu-item hidden" data-cat="bolos">
+            <i class="fas fa-birthday-cake" aria-hidden="true"></i>
             <div>
               <h3>Torta Sacher</h3>
               <p>
-                Bolo de chocolate denso com geleia de damasco, criado em Viena
-                em 1832.
+                Bolo de chocolate denso com geleia de damasco, criação vienense
+                de 1832.
               </p>
             </div>
           </div>
-          <div class="menu-item hidden">
-            <i class="fas fa-tree"></i>
+          <div class="menu-item hidden" data-cat="bolos">
+            <i class="fas fa-tree" aria-hidden="true"></i>
             <div>
               <h3>Floresta Negra</h3>
               <p>
@@ -784,65 +872,8 @@
               </p>
             </div>
           </div>
-          <div class="menu-item hidden">
-            <i class="fas fa-ice-cream"></i>
-            <div>
-              <h3>Panna Cotta</h3>
-              <p>
-                "Nata cozida" italiana do Piemonte, servida com calda de frutas
-                vermelhas.
-              </p>
-            </div>
-          </div>
-          <div class="menu-item hidden">
-            <i class="fas fa-cookie-bite"></i>
-            <div>
-              <h3>Baklava</h3>
-              <p>
-                Massa filo com nozes e mel, tradição do Oriente Médio desde a
-                Mesopotâmia.
-              </p>
-            </div>
-          </div>
-          <div class="menu-item hidden">
-            <i class="fas fa-wheat-awn"></i>
-            <div>
-              <h3>Strudel</h3>
-              <p>
-                Massas folhadas austríacas, destaque para o Apfelstrudel de maçã
-                e canela.
-              </p>
-            </div>
-          </div>
-          <div class="menu-item hidden">
-            <i class="fas fa-cookie-bite"></i>
-            <div>
-              <h3>Croissant</h3>
-              <p>
-                Pão francês em forma de meia-lua, com raízes no kipferl
-                vienense.
-              </p>
-            </div>
-          </div>
-          <div class="menu-item hidden">
-            <i class="fas fa-pizza-slice"></i>
-            <div>
-              <h3>Crêpes</h3>
-              <p>Panquecas finas da Bretanha, servidas doces ou salgadas.</p>
-            </div>
-          </div>
-          <div class="menu-item hidden">
-            <i class="fas fa-cheese"></i>
-            <div>
-              <h3>Le Choux &amp; Profiterole</h3>
-              <p>
-                Massa choux francesa recheada com creme, coberta por calda de
-                chocolate.
-              </p>
-            </div>
-          </div>
-          <div class="menu-item hidden">
-            <i class="fas fa-layer-group"></i>
+          <div class="menu-item hidden" data-cat="bolos">
+            <i class="fas fa-layer-group" aria-hidden="true"></i>
             <div>
               <h3>Mille-Feuille</h3>
               <p>
@@ -851,100 +882,196 @@
               </p>
             </div>
           </div>
-          <div class="menu-item hidden">
-            <i class="fas fa-bowl-food"></i>
+          <div class="menu-item hidden" data-cat="bolos">
+            <i class="fas fa-bowl-food" aria-hidden="true"></i>
             <div>
               <h3>Petit Gâteau</h3>
               <p>
-                Pequeno bolo de chocolate com interior cremoso, receita dos anos
+                Pequeno bolo de chocolate com interior cremoso, sucesso dos anos
                 1980.
               </p>
             </div>
           </div>
-          <div class="menu-item hidden">
-            <i class="fas fa-mug-hot"></i>
+
+          <!-- ================== SORVETES ================== -->
+          <div class="menu-item hidden" data-cat="sorvetes">
+            <i class="fas fa-ice-cream" aria-hidden="true"></i>
             <div>
-              <h3>Cappuccino</h3>
-              <p>Bebida italiana com expresso, leite vaporizado e espuma.</p>
+              <h3>Panna Cotta</h3>
+              <p>
+                "Nata cozida" italiana do Piemonte, servida gelada com calda de
+                frutas vermelhas.
+              </p>
             </div>
           </div>
-          <div class="menu-item hidden">
-            <i class="fas fa-cocktail"></i>
+          <div class="menu-item hidden" data-cat="sorvetes">
+            <i class="fas fa-bread-slice" aria-hidden="true"></i>
+            <div>
+              <h3>Semla</h3>
+              <p>
+                Pão de cardamomo recheado com massa de amêndoas e chantilly,
+                tradicional no inverno sueco.
+              </p>
+            </div>
+          </div>
+
+          <!-- ================== DOCES ================== -->
+          <div class="menu-item hidden" data-cat="doces">
+            <i class="fas fa-cookie" aria-hidden="true"></i>
+            <div>
+              <h3>Macarons</h3>
+              <p>
+                Discos crocantes e recheio cremoso, patrimônio gastronômico da
+                França.
+              </p>
+            </div>
+          </div>
+          <div class="menu-item hidden" data-cat="doces">
+            <i class="fas fa-egg" aria-hidden="true"></i>
+            <div>
+              <h3>Stroopwafel</h3>
+              <p>
+                Biscoito fino prensado com calda de caramelo, clássico holandês.
+              </p>
+            </div>
+          </div>
+          <div class="menu-item hidden" data-cat="doces">
+            <i class="fas fa-cookie-bite" aria-hidden="true"></i>
+            <div>
+              <h3>Pączki</h3>
+              <p>
+                Rosquinha polonesa recheada, tradição que antecede a Páscoa
+                desde a Idade Média.
+              </p>
+            </div>
+          </div>
+          <div class="menu-item hidden" data-cat="doces">
+            <i class="fas fa-cookie-bite" aria-hidden="true"></i>
+            <div>
+              <h3>Baklava</h3>
+              <p>
+                Massa filo com nozes e mel, herança do Oriente Médio desde a
+                antiguidade.
+              </p>
+            </div>
+          </div>
+          <div class="menu-item hidden" data-cat="doces">
+            <i class="fas fa-wheat-awn" aria-hidden="true"></i>
+            <div>
+              <h3>Strudel</h3>
+              <p>
+                Folhado austríaco, destaque para o Apfelstrudel de maçã com
+                canela.
+              </p>
+            </div>
+          </div>
+          <div class="menu-item hidden" data-cat="doces">
+            <i class="fas fa-cookie-bite" aria-hidden="true"></i>
+            <div>
+              <h3>Croissant</h3>
+              <p>
+                Pão amanteigado em meia-lua, descendente do kipferl vienense.
+              </p>
+            </div>
+          </div>
+
+          <!-- ================== CAFÉS ================== -->
+          <div class="menu-item hidden" data-cat="cafes">
+            <i class="fas fa-mug-hot" aria-hidden="true"></i>
+            <div>
+              <h3>Cappuccino</h3>
+              <p>Expresso italiano com leite vaporizado e espuma cremosa.</p>
+            </div>
+          </div>
+          <div class="menu-item hidden" data-cat="cafes">
+            <i class="fas fa-cocktail" aria-hidden="true"></i>
             <div>
               <h3>Frappuccino</h3>
               <p>
-                Criado em 1994 por George Howell, mistura de café gelado com
-                raspadinha.
+                Mistura refrescante de café gelado e raspadinha criada em 1994.
               </p>
             </div>
           </div>
-          <div class="menu-item hidden">
-            <i class="fas fa-coffee"></i>
+          <div class="menu-item hidden" data-cat="cafes">
+            <i class="fas fa-coffee" aria-hidden="true"></i>
             <div>
               <h3>Macchiato</h3>
               <p>
-                Expresso com um toque de leite, criação italiana dos anos 1980.
+                Expresso "manchado" com um toque de leite, invenção dos anos
+                1980.
               </p>
             </div>
           </div>
-          <div class="menu-item hidden">
-            <i class="fas fa-coffee"></i>
+          <div class="menu-item hidden" data-cat="cafes">
+            <i class="fas fa-coffee" aria-hidden="true"></i>
             <div>
               <h3>Café Latte</h3>
               <p>Expresso com leite vaporizado e fina camada de espuma.</p>
             </div>
           </div>
-          <div class="menu-item hidden">
-            <i class="fas fa-coffee"></i>
+          <div class="menu-item hidden" data-cat="cafes">
+            <i class="fas fa-coffee" aria-hidden="true"></i>
             <div>
               <h3>Americano</h3>
               <p>
-                Expresso diluído em água quente, feito por americanos na 2ª
-                Guerra Mundial.
+                Expresso diluído em água quente, popularizado por soldados
+                americanos.
               </p>
             </div>
           </div>
-          <div class="menu-item hidden">
-            <i class="fas fa-cocktail"></i>
+          <div class="menu-item hidden" data-cat="cafes">
+            <i class="fas fa-cocktail" aria-hidden="true"></i>
             <div>
               <h3>Cold Brew</h3>
               <p>
-                Concentrado de café em água fria, prática holandesa do século
-                XVII.
+                Café extraído a frio por imersão prolongada, tradição holandesa
+                do século XVII.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Galeria de Imagens -->
+      <!-- Galeria -->
       <section aria-label="Galeria de Imagens">
         <h2 class="section-title">Galeria</h2>
         <div class="gallery">
-          <img src="./src/img/galeria1.webp" alt="Galeria 1" loading="lazy" />
-          <img src="./src/img/galeria2.webp" alt="Galeria 2" loading="lazy" />
-          <img src="./src/img/galeria3.webp" alt="Galeria 3" loading="lazy" />
+          <img
+            src="./src/img/galeria1.webp"
+            alt="Café servido"
+            loading="lazy"
+          />
+          <img
+            src="./src/img/galeria2.webp"
+            alt="Ambiente da cafeteria"
+            loading="lazy"
+          />
+          <img
+            src="./src/img/galeria3.webp"
+            alt="Gato relaxando"
+            loading="lazy"
+          />
         </div>
       </section>
 
-      <!-- Seção Contato -->
+      <!-- Contato -->
       <section id="contato">
         <h2 class="section-title">Entre em Contato</h2>
         <div class="contact-form">
-          <form action="#" method="post">
+          <form>
             <label for="nome">Nome</label>
             <input
-              type="text"
               id="nome"
               name="nome"
+              type="text"
               placeholder="Seu nome"
               required
             />
             <label for="email">Email</label>
             <input
-              type="email"
               id="email"
               name="email"
+              type="email"
               placeholder="Seu email"
               required
             />
@@ -962,48 +1089,51 @@
       </section>
     </main>
 
-    <!-- Footer -->
+    <!-- ======= Footer ======= -->
     <footer>
       <p>
-        &copy; 2025 KATZEN & KAFFEE. Todos os direitos reservados. |
-        Desenvolvido com
-        <i class="fas fa-heart" aria-hidden="true"></i> por Cat Lovers
+        &copy; 2025 KATZEN &amp; KAFFEE. Todos os direitos reservados. |
+        Desenvolvido com <i class="fas fa-heart" aria-hidden="true"></i> por Cat
+        Lovers
       </p>
     </footer>
 
+    <!-- ======= Scripts ======= -->
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        // Scroll suave
+        /* ------------------------------
+           Scroll suave para âncoras
+        ------------------------------ */
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-          anchor.addEventListener('click', e => {
-            e.preventDefault();
-
-            const targetId = e.currentTarget.getAttribute('href');
+          anchor.addEventListener('click', event => {
+            event.preventDefault();
+            const targetId = anchor.getAttribute('href');
             const targetElement = document.querySelector(targetId);
             const offset = 80;
 
             if (targetElement) {
-              const targetPosition =
+              const top =
                 targetElement.getBoundingClientRect().top +
-                window.scrollY -
+                window.pageYOffset -
                 offset;
-
-              window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth',
-              });
+              window.scrollTo({ top, behavior: 'smooth' });
             }
           });
         });
 
-        // form
-        document.querySelector('form').addEventListener('submit', e => {
-          e.preventDefault();
+        /* ------------------------------
+           Formulário de contato (fake)
+        ------------------------------ */
+        const form = document.querySelector('.contact-form form');
+        form.addEventListener('submit', event => {
+          event.preventDefault();
           alert('Sua mensagem foi enviada. Entraremos em contato em breve!');
-          e.target.reset();
+          form.reset();
         });
 
-        // Mobile Menu Toggle com atualização de atributo ARIA e animação
+        /* ------------------------------
+           Menu mobile toggle
+        ------------------------------ */
         const menuButton = document.querySelector('.menu-mobile');
         const navMenu = document.getElementById('nav-menu');
         menuButton.addEventListener('click', () => {
@@ -1015,7 +1145,10 @@
           menuButton.setAttribute('aria-expanded', expanded);
         });
 
-        // Intersection Observer para animar os cat-cards e step-cards quando entrarem na viewport
+        /* ------------------------------
+           Intersection Observer
+           (cards de adoção + steps)
+        ------------------------------ */
         const observer = new IntersectionObserver(
           (entries, obs) => {
             entries.forEach(entry => {
@@ -1028,30 +1161,24 @@
           },
           { threshold: 0.1, rootMargin: '0px 0px -100px 0px' },
         );
-        document.querySelectorAll('.cat-card, .step-card').forEach(el => {
-          observer.observe(el);
-        });
+        document
+          .querySelectorAll('.cat-card, .step-card')
+          .forEach(el => observer.observe(el));
 
-        // Adiciona listener de "animationend" para remover a classe "visible" dos cat-cards
-        document.querySelectorAll('.cat-card').forEach(card => {
-          card.addEventListener('animationend', () => {
-            card.classList.remove('visible');
-          });
-        });
-
-        // Intersection Observer específico para a seção "Nosso Menu"
+        /* ------------------------------
+           Animação do menu (stagger)
+        ------------------------------ */
         const menuSection = document.getElementById('menu');
         const observerMenu = new IntersectionObserver(
           (entries, obs) => {
             entries.forEach(entry => {
               if (entry.isIntersecting) {
-                // Para cada item do menu, aplica um delay para efeito de stagger
-                const menuItems = entry.target.querySelectorAll('.menu-item');
-                menuItems.forEach((item, index) => {
+                const items = entry.target.querySelectorAll('.menu-item');
+                items.forEach((item, index) => {
                   setTimeout(() => {
                     item.classList.add('active');
                     item.classList.remove('hidden');
-                  }, index * 200);
+                  }, index * 150);
                 });
                 obs.unobserve(entry.target);
               }
@@ -1060,6 +1187,54 @@
           { threshold: 0.2, rootMargin: '0px 0px -100px 0px' },
         );
         observerMenu.observe(menuSection);
+
+        /* ------------------------------
+           Tabs do cardápio
+        ------------------------------ */
+        const tabs = document.querySelectorAll('.tab');
+        const menuItems = document.querySelectorAll('.menu-item');
+
+        tabs.forEach(tab => {
+          tab.addEventListener('click', () => {
+            // define aba ativa
+            tabs.forEach(t => {
+              t.classList.toggle('active', t === tab);
+              t.setAttribute('aria-selected', t === tab);
+            });
+            const categoria = tab.dataset.cat;
+
+            // mostra ou esconde itens
+            menuItems.forEach(item => {
+              const exibe =
+                categoria === 'todos' || item.dataset.cat === categoria;
+              item.style.display = exibe ? 'flex' : 'none';
+            });
+          });
+        });
+
+        /* ------------------------------
+           Modal de rastreio
+        ------------------------------ */
+        const modalButtons = document.querySelectorAll('[data-modal]');
+        modalButtons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const modalId = btn.dataset.modal;
+            const modal = document.getElementById(modalId);
+            modal?.classList.toggle('hidden');
+          });
+        });
+        document.addEventListener('click', event => {
+          if (event.target.classList.contains('modal')) {
+            event.target.classList.add('hidden');
+          }
+        });
+        document.addEventListener('keydown', event => {
+          if (event.key === 'Escape') {
+            document
+              .querySelectorAll('.modal')
+              .forEach(m => m.classList.add('hidden'));
+          }
+        });
       });
     </script>
   </body>
